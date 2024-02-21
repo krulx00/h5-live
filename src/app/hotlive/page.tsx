@@ -39,7 +39,6 @@ function Page() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Suspense fallback={<>Loading...</>}>
       <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 ">
       {roomList?.map((d) => (
         <a
@@ -86,7 +85,6 @@ function Page() {
         </a>
       ))}
     </div>
-    </Suspense>
   );
 }
 
