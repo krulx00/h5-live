@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 export default function LiveCategory({}) {
   const [category, setCategory] = useState<Record<any, any>>({
     All: 1,
+    Locked: 99,
     Toys: 2,
   });
   useEffect(() => {
@@ -25,8 +26,8 @@ export default function LiveCategory({}) {
   }, [category]);
 
   return (
-    <div className="flex gap-2 p-2 ">
-      {Object.keys(category).length > 2 &&
+    <div className="flex gap-2">
+      {
         Object.keys(category).map((value, index) => (
           <button
             //   onClick={x}

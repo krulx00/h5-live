@@ -4,7 +4,7 @@ export default function Page(){
 
     return(
         <div>
-            Hello
+            Nothing Here :)
         </div>
     )
 }
