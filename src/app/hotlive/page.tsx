@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useParams, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 import {IoEye, IoEyeOutline} from 'react-icons/io5'
 import ReactCountryFlag from "react-country-flag"
@@ -39,7 +39,8 @@ function Page() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 ">
+    <Suspense fallback={<>Loading...</>}>
+      <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 ">
       {roomList?.map((d) => (
         <a
           className="border flex rounded overflow-hidden shadow-lg sm:h-40 lg:h-44"
@@ -85,6 +86,7 @@ function Page() {
         </a>
       ))}
     </div>
+    </Suspense>
   );
 }
 
