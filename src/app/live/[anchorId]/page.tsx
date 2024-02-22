@@ -4,7 +4,11 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
-import { IoPeopleOutline } from "react-icons/io5";
+import {
+  IoLockClosedOutline,
+  IoLockOpenOutline,
+  IoPeopleOutline,
+} from "react-icons/io5";
 import ReactPlayer from "react-player";
 import { decryptStreamingLink } from "@/utils/aesDecrypt";
 import Head from "next/head";
@@ -25,18 +29,21 @@ interface RoomInfoType {
   pullLCAddress: string;
   watchUserCounts: number;
   area: string;
+  buy?: boolean;
+  payType: number;
 }
 export default function LiveRoom() {
   const params = useParams();
   const { anchorId } = params;
   const [roomData, setRoomData] = useState<RoomInfoType>();
   const [streamingLink, setStreamingLink] = useState<string>();
+  const [swipeData, setSwipeData] = useState<{ anchorId: string }[]>([]);
   useEffect(() => {
     const fetchRoomInfo = async () => {
       const headers = {
         "content-type": "application/json",
         merchantid: "501",
-        "locale-language": "IND",
+        "locale-language": "ENU",
         "dev-type": "H5",
         authorization: "Basic d2ViLXBsYXllcjp3ZWJQbGF5ZXIyMDIyKjk2My4hQCM=",
         area: "ID",
@@ -44,20 +51,38 @@ export default function LiveRoom() {
       let data = JSON.stringify({
         anchorId,
       });
-
       const roomInfoUrl =
-        "https://api.t3cdn.com/501/api/live-service/h5/v3/public/live/room-info";
+        "https://fzo.clowcdn.com/501/api/live-service/h5/v3/public/live/room-info";
       const response = await axios.post(roomInfoUrl, data, { headers });
       setRoomData(response.data);
+      console.log(response.data);
     };
 
+    const fetchSwipeInfo = async () => {
+      const headers = {
+        "dev-type": "iOS_iPhone 15 Pro Max",
+        merchantid: "501",
+        area: "ID",
+        "locale-language": "ENU",
+        membertype: "1",
+        "content-type": "application/json",
+      };
+      let data = JSON.stringify({
+        anchorId: anchorId,
+      });
+      const swipeInfoUrl =
+        "https://fzo.clowcdn.com/501/api/live-service/v3/public/live/swipe-switch";
+
+      const response = await axios.post(swipeInfoUrl, data, { headers });
+      setSwipeData(response.data);
+    };
     fetchRoomInfo();
+    fetchSwipeInfo();
   }, [anchorId]);
 
   useEffect(() => {
     if (roomData?.pullAddress) {
-      console.log("first");
-      const streamUrl = decryptStreamingLink(roomData.pullAddressSmooth);
+      const streamUrl = decryptStreamingLink(roomData.pullAddress);
       setStreamingLink(streamUrl);
     }
   }, [roomData]);
@@ -89,9 +114,15 @@ export default function LiveRoom() {
             </div>
 
             <div className="flex flex-col gap-0">
-              <p className="text-md font-medium">
+              <p className="text-md font-medium flex items-center gap-2">
                 {roomData?.anchorNickName}
                 <ReactCountryFlag countryCode={roomData?.area || "ID"} svg />
+
+                {roomData?.payType === 2 ? (
+                  <IoLockClosedOutline />
+                ) : (
+                  <IoLockOpenOutline />
+                )}
               </p>
               <div className="text-sm flex flex-row gap-2 justify-start items-center">
                 <p>{roomData?.liveName}</p>
@@ -116,7 +147,9 @@ export default function LiveRoom() {
 
           <div className="flex p-2 w-full justify-between items-center">
             <div>
-              <a href="">{`<-`} Prev</a>
+              <a href={`/live/${swipeData[0]?.anchorId || anchorId}`}>
+                {`<-`} Prev
+              </a>
             </div>
             <div className="flex gap-3">
               <button
@@ -161,7 +194,9 @@ export default function LiveRoom() {
             </div>
 
             <div>
-              <a href="">Next {`->`}</a>
+              <a href={`/live/${swipeData[2]?.anchorId || anchorId}`}>
+                Next {`->`}
+              </a>
             </div>
           </div>
         </div>
