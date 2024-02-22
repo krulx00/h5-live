@@ -55,7 +55,6 @@ export default function LiveRoom() {
         "https://fzo.clowcdn.com/501/api/live-service/h5/v3/public/live/room-info";
       const response = await axios.post(roomInfoUrl, data, { headers });
       setRoomData(response.data);
-      console.log(response.data);
     };
 
     const fetchSwipeInfo = async () => {

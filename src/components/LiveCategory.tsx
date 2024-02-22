@@ -26,7 +26,6 @@ export default function LiveCategory({}) {
         category[data.labelName] = Number(data.id);
       }
       Object.entries(category).sort(([, a]: any, [, b]: any) => a - b);
-      console.log("rerender");
     }
     getCategory();
   }, [category]);
