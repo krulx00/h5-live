@@ -127,7 +127,7 @@ export default function LiveRoom() {
                 <p>{roomData?.liveName}</p>
                 <span className="flex gap-0.5  items-center">
                   <IoPeopleOutline />
-                  <p>190</p>
+                  <p>{roomData.watchUserCounts}</p>
                 </span>
               </div>
             </div>
