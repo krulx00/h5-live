@@ -3,8 +3,11 @@
 export default function Page(){
 
     return(
+        <>
         <div>
-            Nothing Here :)
+
         </div>
+        <a href="/hotlive">HotLive {`->`}</a>
+        </>
     )
 }
