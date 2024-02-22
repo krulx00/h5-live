@@ -104,7 +104,7 @@ export default function LiveRoom() {
             <div>
               <Image
                 className="max-h-10 rounded max-w-10"
-                src="https://aaa.m1cdn.com/20240216/36eec45346cd4be5a6875ad3bf370cbb.jpg"
+                src={roomData.anchorHeadPortrait}
                 width={200}
                 height={200}
                 priority={true}
