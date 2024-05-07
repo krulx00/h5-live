@@ -82,6 +82,7 @@ export default function LiveRoom() {
   useEffect(() => {
     if (roomData?.pullAddress) {
       const streamUrl = decryptStreamingLink(roomData.pullAddress);
+      console.log(streamUrl)
       setStreamingLink(streamUrl);
     }
   }, [roomData]);
