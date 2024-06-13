@@ -42,7 +42,7 @@ export default function LiveRoom() {
     const fetchRoomInfo = async () => {
       const headers = {
         "content-type": "application/json",
-        merchantid: "501",
+        merchantid: "532",
         "locale-language": "ENU",
         "dev-type": "H5",
         authorization: "Basic d2ViLXBsYXllcjp3ZWJQbGF5ZXIyMDIyKjk2My4hQCM=",
@@ -52,7 +52,7 @@ export default function LiveRoom() {
         anchorId,
       });
       const roomInfoUrl =
-        "https://fzo.clowcdn.com/501/api/live-service/h5/v3/public/live/room-info";
+        "https://fzo.clowcdn.com/532/api/live-service/h5/v3/public/live/room-info";
       const response = await axios.post(roomInfoUrl, data, { headers });
       setRoomData(response.data);
     };

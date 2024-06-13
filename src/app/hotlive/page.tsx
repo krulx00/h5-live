@@ -32,12 +32,12 @@ function Page() {
     const fetchRoomList = async () => {
       let cat = category;
       if (cat == "99") cat = 1;
-      const roomListUrl = `https://fzo.clowcdn.com/501/api/live-service/h5/v5/public/live/lives?pageNum=1&pageSize=1000&labelId=${cat}`;
+      const roomListUrl = `https://fzo.clowcdn.com/532/api/live-service/h5/v5/public/live/lives?pageNum=1&pageSize=1000&labelId=${cat}`;
       const headers = {
         memberid: "1760461158972575746",
         sign: "11f569ed792da4e0cff8a393534a5bf2",
         "dev-type": "iOS_iPhone 15 Pro Max",
-        merchantid: "501",
+        merchantid: "532",
         area: "ID",
         "locale-language": "ENU",
         membertype: "1",
@@ -47,6 +47,8 @@ function Page() {
         headers,
       });
       const data: RoomDataType[] = response.data.records;
+
+      console.log(data.length)
       setRoomList(data);
       if (category === "99") {
         setRoomList((roomList) => roomList.filter((w) => w.payType === 2));
